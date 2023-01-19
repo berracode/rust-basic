@@ -41,7 +41,24 @@ fn main() {
     let d = 'Æ'; //alt 146
     let e = '#';
 
+    // TIPO TUPLA
+    let tuple: (i32, f32, bool, char) = (23, 100.09, true, 'A');
+    let tuple = (true, false, 6.4);
 
+    //obtener los valores de una tupla del
+    let (is_fun, is_bad, cash) = tuple;
+
+    println!("The value of cash is: {cash}");
+
+    let bool_true = tuple.0;
+    let bool_false = tuple.1;
+    let six_point_four =  tuple.2;
+
+    println!("The value of six_point_four is {six_point_four}");
+
+    //ARRAY
+
+    
 
 
 }
