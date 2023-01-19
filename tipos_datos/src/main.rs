@@ -58,7 +58,28 @@ fn main() {
 
     //ARRAY
 
-    
+    let notas_academicas =  [2.3, 2.1, 3.1, 3.3, 3.4]; //array de 5 posiciones de numeros flotantes de 64 bits 
+
+    let frutas = ["Manzana", "pera", "banano", "maracuya"];
+
+    //para declarar sin dejar que la infiera rust
+    let marcas_automoviles: [&str; 3] = ["Ferrari", "Toyota", "BMW"];
+
+    //mismo valor para todos los elementos
+
+    let array_de_10 = [10; 3];
+    //equivalente a escribir
+
+    let array_de_10 = [10, 10, 10];
+
+    //acceso a elementos del array
+    let enteros = [10, 20, 30, 40, 50];
+    println!("enteros en la posición 0 ={}", enteros[0]);
+    println!("enteros en la posición 1 ={}", enteros[1]);
+    println!("enteros en la posición 2 ={}", enteros[2]);
+    println!("enteros en la posición 3 ={}", enteros[3]);
+    println!("enteros en la posición 4 ={}", enteros[4]);
+
 
 
 }
