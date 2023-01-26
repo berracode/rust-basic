@@ -30,6 +30,12 @@ fn main() {
         println!("el numero no es divisible ni por 4, 3 o 2");
     }
 
-    
+    // if en una declaración let
+
+    let condicion = true;
+    let numero  = if condicion {5} else {6};
+
+    println!("el valor del numero es: {numero}");
+
 
 }
