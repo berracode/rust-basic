@@ -20,4 +20,18 @@ fn main() {
     };
 
     println!("username {}", user1.username);
+
+    //para modificar algun campo de la estructura, la variable debe ser mutable, rust no permite marcar
+    // los campos como mutables
+
+    let mut user2 = User { 
+        username: String::from("berracode2"),
+        email: String::from("berracode2@nada.com"),
+        active: false,
+        age: 32
+    };
+
+    user2.email = String::from("berracode2@gmail.com");
+
+    println!("email user2 {}", user2.email);
 }
