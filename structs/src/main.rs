@@ -11,6 +11,8 @@ struct User {
     age: u8
 }
 
+
+//veremos más adelantes que son los Traits
 impl fmt::Display for User {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "User {{ username: {}, email: {}, active: {}, age: {} }}", 
@@ -52,6 +54,11 @@ fn main() {
 
     println!("User3 {} ", user3);
 
+    let user4 = build_user_version_2( String::from("user4"),  String::from("user4@gmail.com"), 233);
+
+    println!("User4 {} ", user4);
+
+
 
 
 }
@@ -63,6 +70,17 @@ fn build_user(username: String, email: String, age: u8) -> User {
         username: username,
         email: email,
         age: age,
+        active: true,
+    }
+}
+
+
+//version 2, Field Init Shorthand
+fn build_user_version_2(username: String, email: String, age: u8) -> User {
+    User {
+        username,
+        email,
+        age,
         active: true,
     }
 }
