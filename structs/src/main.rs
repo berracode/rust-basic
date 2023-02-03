@@ -11,6 +11,11 @@ struct User {
     age: u8
 }
 
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
 
 //veremos más adelantes que son los Traits
 impl fmt::Display for User {
@@ -58,11 +63,22 @@ fn main() {
 
     println!("User4 {} ", user4);
 
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
 
+    println!(
+        "el area del rectangulo es {} ",
+        area(&rect1)
+    );
 
 
 }
 
+fn area(rectangle: &Rectangle) -> u32 {
+    rectangle.width * rectangle.height
+}
 
 //función para crear User
 fn build_user(username: String, email: String, age: u8) -> User {
