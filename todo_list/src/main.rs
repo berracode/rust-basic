@@ -1,9 +1,11 @@
-use std::{env, process};
+use std::{env, process, io, fmt::Error, rc::Rc, sync::{Mutex, Arc}, cell::RefCell};
 
-type DataBase = Vec<Todo>;
+type DataBase = Rc<RefCell<Vec<Todo>>>;
+
+
 
 fn blank_db() -> DataBase {
-    Vec::new()
+    Rc::new(RefCell::new(Vec::new()))
 }
 
 
@@ -22,47 +24,11 @@ struct Params {
 
 }
 
-impl Params {
-    
-    fn new(args: &[String]) -> Result<Params, &'static str>{
 
-        if args.len() >= 3 {
-            let command_arg = args[1].clone();
 
-            let mut params = Params::default();
-
-            if command_arg.eq_ignore_ascii_case("create") {
-                params.command = Some(Command::Create); //2 id, 3 name, 4 description
-                let todo = Todo{
-                    id: args[2].parse().unwrap(),
-                    name: args[3].clone(),
-                    completed: false,
-                };
-                params.todo = Some(todo);
-
-            } else if command_arg.eq_ignore_ascii_case("list") {
-
-            } else if command_arg.eq_ignore_ascii_case("delete") {
-
-            } else if command_arg.eq_ignore_ascii_case("update") {
-
-            } else if command_arg.eq_ignore_ascii_case("findbyid"){
-
-            } else {
-                // TODO print help
-            }
-
-            Ok(params)
-        }else {
-            return Err("Some arguments not found");
-
-        }
-
-    }
-}
+#[derive(Debug, Clone)]
 
 struct Todo {
-    id: i32,
     name: String,
     completed: bool
 }
@@ -70,30 +36,76 @@ struct Todo {
 fn main() {
     let args: Vec<String> = env::args().collect();
     println!("{:?}",args);
-    let params = Params::new(&args).unwrap_or_else(|error|{
-        eprintln!("Error {error}");
-        process::exit(0);
-    });
+    let db = blank_db();
+    menu(db);
+    
+}
+
+fn menu(db: DataBase) {
+
+    loop {
+    println!("\nElije la opción: \n");
+        println!("1. Crear\n2. Listar\n3. Salir\n");
+        let mut opcion =  String::new();
+
+        io::stdin().read_line(&mut opcion).expect("Error");
 
 
-
+        match opcion.trim().parse().unwrap() {
+            1 =>{
+                println!("1");
+                handle_command(db.clone(), Command::Create);
+            } ,
+            2 => {
+                println!("2");
+                handle_command(db.clone(), Command::ListAll);
+            },
+            3 => process::exit(0),
+            _ => println!("none")     
+        }
+        println!("big db len: {}", db.borrow().len());
+        
+    }
 }
 
 
 
 
-fn handle_command(params: Params){
-    let mut data = blank_db();
+fn handle_command(db: DataBase,  command: Command){
+    let mut data = db.borrow_mut();
 
-    match params.command {
-        Some(Command::Create) =>{
+    match command {
+        Command::Create =>{
             println!("create");
-            data.push(params.todo.unwrap());
+            let todo = create_todo();
+            println!("Ingresado");
+            data.push(todo);
+            println!("db len: {}", data.len());
+
         },
-        Some(Command::Delete) => println!("delete"), 
+        Command::ListAll => {
+            println!("list here: {}", data.len());
+            data.iter().for_each(|todo| {println!("todo {todo:?}")});
+            
+        }, 
         _ => println!("No")
         
     }
+}
+
+fn create_todo() -> Todo {
+    let mut name = String::new();
+    let mut completed = String::new();
+
+    println!("Nombre del todo: ");
+    io::stdin().read_line(&mut name).expect("Error");
+
+    println!("Estado del todo");
+    io::stdin().read_line(&mut completed).expect("Error");
+
+
+    Todo { name: name, completed:  completed.trim().parse().unwrap()}
+
 }
 
 
