@@ -1,9 +1,7 @@
 use std::fmt;
 
-
-
-//similares a las tuplas, ambas pueden tener varios valores de diferente tipo de dato
-// similares a las struct de C o las clases de Typescript o Java
+/// similares a las tuplas, ambas pueden tener varios valores de diferente tipo de dato
+/// similares a las struct de C o las clases de Typescript o Java
 struct User {
     username: String,
     email: String,
@@ -25,8 +23,28 @@ impl fmt::Display for User {
     }
 }
 
+// struct tipo tupla
+struct Limites(usize, usize);
+
+// struct tipo unidad
+struct MiUnidad;
+
+impl MiUnidad {
+    fn saludo(&self) {
+        println!("¡Hola desde MiUnidad!");
+    }
+}
+
 fn main() {
     //usando una struct
+
+    let unidad = MiUnidad;
+    unidad.saludo();
+
+    let imagen = Limites(1024, 768);
+
+    assert_eq!(imagen.0, 1024);
+    assert_eq!(imagen.1, 768);
 
     let user1 = User { 
         username: String::from("berracode"),
